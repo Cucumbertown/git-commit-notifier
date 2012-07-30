@@ -134,7 +134,7 @@ module GitCommitNotifier
           return nil
         end
 
-        unless exclude_branches.nil? || branch_name.match(/#{exclude_brances})
+        unless exclude_branches.nil? || branch_name.match(/#{exclude_brances}/)
           info("Suppressing mail for branch #{branch_name} matched exclude regex...")
           return nil
         end
