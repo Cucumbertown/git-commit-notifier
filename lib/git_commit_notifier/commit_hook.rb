@@ -54,6 +54,14 @@ module GitCommitNotifier
         include_branches
       end
 
+      # Gets regex of branch name to exclude into notifications.
+      # @note All branches will be notified about if nil;
+      # @return [regex string, NilClass] Regex
+      def exclude_branches
+        exclude_branches = config["exclude_branches"]
+        exclude_branches
+      end
+
       # Is merge commit?
       # @param [Hash] commit_info Information about commit.
       def merge_commit?(commit_info)
@@ -123,6 +131,11 @@ module GitCommitNotifier
 
         unless include_branches.nil? || include_branches.include?(branch_name)
           info("Supressing mail for branch #{branch_name}...")
+          return nil
+        end
+
+        unless exclude_branches.nil? || branch_name.match(/#{exclude_brances})
+          info("Suppressing mail for branch #{branch_name} matched exclude regex...")
           return nil
         end
 
